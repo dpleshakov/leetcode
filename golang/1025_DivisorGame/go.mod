@@ -1,3 +1,3 @@
-module github.com/dpleshakov/leetcode/1025_DivisorGame
+module github.com/dpleshakov/leetcode/golang/1025_DivisorGame
 
 go 1.19
