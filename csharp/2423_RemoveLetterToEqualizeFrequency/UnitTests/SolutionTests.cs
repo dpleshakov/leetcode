@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace _2423_RemoveLetterToEqualizeFrequency.Tests
+namespace _2423_RemoveLetterToEqualizeFrequency.UnitTests
 {
     [TestClass()]
     public class SolutionTests
