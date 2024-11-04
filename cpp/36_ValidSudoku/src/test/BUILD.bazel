@@ -1,0 +1,10 @@
+cc_test(
+    name = "test",
+    size = "small",
+    srcs = ["test_solution.cpp"],
+    deps = [
+        "//:36_ValidSudoku",
+        "@googletest//:gtest",
+        "@googletest//:gtest_main",
+    ],
+)

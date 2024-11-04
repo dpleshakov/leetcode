@@ -1,0 +1,6 @@
+/.vscode/
+/bazel-36_validsudoku/
+/bazel-bin/
+/bazel-out/
+/bazel-testlogs/
+MODULE.bazel.lock
