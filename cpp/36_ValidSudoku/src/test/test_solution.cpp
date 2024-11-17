@@ -43,6 +43,10 @@ class SolutionTest : public ::testing::Test {
       {'3', '7', '9', '4', '2', '5', '1', '8', '6'},
       {'\0', '9', '\0', '2', 'a', '1', '\0', '\0'},
       {'a', 'a', 'a', '3'}};
+
+  const std::vector<std::vector<char>> invalid_digits_ = {
+      {'1', '1'},
+      {'1', '2', '3', '2', '5', '6', '7', '8', '9'}};
   // clang-format on
 };
 
@@ -54,27 +58,14 @@ TEST_F(SolutionTest, DISABLED_isValidSudokuTest) {
 }
 
 TEST_F(SolutionTest, IsDigitsValidTest) {
-  std::vector<std::vector<char>> rows;
-  rows.reserve(valid_digits_.size() + valid_board_.size() + invalid_board_.size());
-  rows.insert(rows.end(), valid_digits_.begin(), valid_digits_.end());
-  rows.insert(rows.end(), valid_board_.begin(), valid_board_.end());
-  rows.insert(rows.end(), invalid_board_.begin(), invalid_board_.end());
+  for (const auto& digits : valid_digits_) {
+    EXPECT_TRUE(solution_.Test_IsDigitsValid(digits)) << "Digits: " << ::testing::PrintToString(digits);
+  }
 
-  for (const auto& row : rows) {
-    EXPECT_TRUE(solution_.Test_IsDigitsValid(row)) << "Digits: " << ::testing::PrintToString(row);
+  for (const auto& digits : invalid_digits_) {
+    EXPECT_FALSE(solution_.Test_IsDigitsValid(digits)) << "Digits: " << ::testing::PrintToString(digits);
   }
 }
-
-// TEST_F(SolutionTest, InvalidDigitsToValidate) {
-//   const std::vector<char> digitsTovalidate1 = {'1', '1'};
-//   const std::vector<char> digitsTovalidate2 = {'1', '2', '3', '2', '5',
-//                                                '6', '7', '8', '9'};
-
-//   EXPECT_FALSE(IsDigitsValid(digitsTovalidate1))
-//       << "Digits to validate: " << digitsTovalidate1;
-//   EXPECT_FALSE(IsDigitsValid(digitsTovalidate2))
-//       << "Digits to validate: " << digitsTovalidate2;
-// }
 
 }  // namespace
 
