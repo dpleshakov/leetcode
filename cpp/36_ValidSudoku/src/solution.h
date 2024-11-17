@@ -1,30 +1,30 @@
-#ifndef _36_VALIDSUDOKU_H_
-#define _36_VALIDSUDOKU_H_
+#ifndef LEETCODE_36_VALIDSUDOKU_SOLUTION_H_
+#define LEETCODE_36_VALIDSUDOKU_SOLUTION_H_
 
 #include <vector>
 
+namespace sudoku {
+
 class Solution {
  public:
-  bool isValidSudoku(const std::vector<std::vector<char>> &board) {
+  bool isValidSudoku(const std::vector<std::vector<char>> &board) const {
     if (board.size() == 0) {
       return false;
     }
 
     bool valid = true;
 
-    for (size_t rowIndex = 0; rowIndex < board.size(); ++rowIndex) {
-      valid = valid && isRowValid(board, rowIndex);
+    for (size_t row_index = 0; row_index < board.size(); ++row_index) {
+      valid = valid && IsRowValid(board, row_index);
     }
 
-    for (size_t columnIndex = 0; columnIndex < board[0].size(); ++columnIndex) {
-      valid = valid && isColumnValid(board, columnIndex);
+    for (size_t column_index = 0; column_index < board[0].size(); ++column_index) {
+      valid = valid && IsColumnValid(board, column_index);
     }
 
-    for (size_t rowIndex = 0; rowIndex < board.size();
-         rowIndex = rowIndex + 3) {
-      for (size_t columnIndex = 0; columnIndex < board[0].size();
-           columnIndex = columnIndex + 3) {
-        valid = valid && isSubBoxValid(board, rowIndex, columnIndex);
+    for (size_t row_index = 0; row_index < board.size(); row_index = row_index + 3) {
+      for (size_t column_index = 0; column_index < board[0].size(); column_index = column_index + 3) {
+        valid = valid && IsSubBoxValid(board, row_index, column_index);
       }
     }
 
@@ -32,60 +32,55 @@ class Solution {
   }
 
  private:
-  bool isRowValid(const std::vector<std::vector<char>> &board,
-                  const size_t row) {
+  bool IsRowValid(const std::vector<std::vector<char>> &board, const size_t row) const {
     if (row >= board.size()) {
       return false;
     }
 
-    std::vector<char> digitsToValidate(board.size());
+    std::vector<char> digits_to_validate(board.size());
 
-    for (size_t columnIndex = 0; columnIndex < board[row].size();
-         ++columnIndex) {
-      digitsToValidate.push_back(board[row][columnIndex]);
+    for (size_t column_index = 0; column_index < board[row].size(); ++column_index) {
+      digits_to_validate.push_back(board[row][column_index]);
     }
 
-    return isDigitsValid(digitsToValidate);
+    return IsDigitsValid(digits_to_validate);
   }
 
-  bool isColumnValid(const std::vector<std::vector<char>> &board,
-                     const size_t column) {
-    std::vector<char> digitsToValidate(board.size());
+  bool IsColumnValid(const std::vector<std::vector<char>> &board, const size_t column) const {
+    std::vector<char> digits_to_validate(board.size());
 
-    for (size_t rowIndex = 0; rowIndex < board.size(); ++rowIndex) {
-      if (column >= board[rowIndex].size()) {
+    for (size_t row_index = 0; row_index < board.size(); ++row_index) {
+      if (column >= board[row_index].size()) {
         return false;
       }
 
-      digitsToValidate.push_back(board[rowIndex][column]);
+      digits_to_validate.push_back(board[row_index][column]);
     }
 
-    return isDigitsValid(digitsToValidate);
+    return IsDigitsValid(digits_to_validate);
   }
 
-  bool isSubBoxValid(const std::vector<std::vector<char>> &board,
-                     const size_t row, const size_t column) {
-    std::vector<char> digitsToValidate(board.size());
+  bool IsSubBoxValid(const std::vector<std::vector<char>> &board, const size_t row, const size_t column) const {
+    std::vector<char> digits_to_validate(board.size());
 
-    for (size_t rowIndex = row; rowIndex < row + 3; ++rowIndex) {
-      if (rowIndex >= board.size()) {
+    for (size_t row_index = row; row_index < row + 3; ++row_index) {
+      if (row_index >= board.size()) {
         return false;
       }
 
-      for (size_t columnIndex = column; columnIndex < columnIndex + 3;
-           ++columnIndex) {
-        if (columnIndex >= board[rowIndex].size()) {
+      for (size_t column_index = column; column_index < column_index + 3; ++column_index) {
+        if (column_index >= board[row_index].size()) {
           return false;
         }
 
-        digitsToValidate.push_back(board[rowIndex][columnIndex]);
+        digits_to_validate.push_back(board[row_index][column_index]);
       }
     }
 
-    return isDigitsValid(digitsToValidate);
+    return IsDigitsValid(digits_to_validate);
   }
 
-  bool isDigitsValid(const std::vector<char> digits) {
+  bool IsDigitsValid(const std::vector<char> digits) const {
     bool found1 = false;
     bool found2 = false;
     bool found3 = false;
@@ -135,13 +130,30 @@ class Solution {
           found9 = true;
           break;
       }
-
-      return true;
     }
+
+    return true;
   }
 
+#ifdef UNIT_TESTING
  public:
-  friend class SolutionTest;
+  bool Test_IsRowValid(const std::vector<std::vector<char>> &board, const size_t row) const {
+    return IsRowValid(board, row);
+  }
+
+  bool Test_IsColumnValid(const std::vector<std::vector<char>> &board, const size_t column) {
+    return IsColumnValid(board, column);
+  }
+
+  bool Test_IsSubBoxValid(const std::vector<std::vector<char>> &board, const size_t row, const size_t column) {
+    return IsSubBoxValid(board, row, column);
+  }
+
+  bool Test_IsDigitsValid(const std::vector<char> digits) { return IsDigitsValid(digits); }
+
+#endif  // #ifdef UNIT_TESTING
 };
 
-#endif  // _36_VALIDSUDOKU_H_
+}  // namespace sudoku
+
+#endif  // LEETCODE_36_VALIDSUDOKU_SOLUTION_H_
