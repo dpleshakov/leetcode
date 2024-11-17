@@ -5,5 +5,15 @@ cc_library(
     srcs = glob(
         ["src/*.h"],
     ),
+    copts = select({
+        "//conditions:default": [
+            "-Wall",
+            "-Werror",
+        ],
+        "@platforms//os:windows": [
+            "/WX",
+            "/W4",
+        ],
+    }),
     includes = ["src"],
 )

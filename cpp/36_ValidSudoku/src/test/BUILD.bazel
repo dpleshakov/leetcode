@@ -2,6 +2,18 @@ cc_test(
     name = "test",
     size = "small",
     srcs = ["test_solution.cpp"],
+    copts = [
+        "-DUNIT_TESTING"
+    ] + select({
+        "//conditions:default": [
+            "-Wall",
+            "-Werror",
+        ],
+        "@platforms//os:windows": [
+            "/WX",
+            "/W4",
+        ],
+    }),
     deps = [
         "//:36_ValidSudoku",
         "@googletest//:gtest",
