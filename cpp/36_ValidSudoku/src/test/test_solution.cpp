@@ -52,7 +52,7 @@ class SolutionTest : public ::testing::Test {
 
 namespace {
 
-TEST_F(SolutionTest, DISABLED_isValidSudokuTest) {
+TEST_F(SolutionTest, isValidSudokuTest) {
   EXPECT_TRUE(solution_.isValidSudoku(valid_board_));
   EXPECT_FALSE(solution_.isValidSudoku(invalid_board_));
 }
@@ -75,12 +75,20 @@ TEST_F(SolutionTest, IsColumnValidTest) {
   }
 
   ASSERT_TRUE(invalid_board_.size() > 0);
-  ASSERT_TRUE(invalid_board_[0].size() > 0);
-
   EXPECT_FALSE(solution_.Test_IsColumnValid(invalid_board_, 0)) << "Column index: 0";
+
+  ASSERT_TRUE(invalid_board_[0].size() > 0);
 
   for (size_t column_index = 1; column_index < invalid_board_[0].size(); ++column_index) {
     EXPECT_TRUE(solution_.Test_IsColumnValid(invalid_board_, column_index)) << "Column index: " << column_index;
+  }
+}
+
+TEST_F(SolutionTest, IsSubBoxValid) {
+  for (size_t row_index = 0; row_index < valid_board_.size(); row_index += 3) {
+    for (size_t column_index = 0; column_index < valid_board_[row_index].size(); column_index += 3) {
+      EXPECT_TRUE(solution_.Test_IsSubBoxValid(valid_board_, row_index, column_index)) << "(Row, Column) index: (" << row_index << ", " << column_index << ")";
+    }
   }
 }
 
