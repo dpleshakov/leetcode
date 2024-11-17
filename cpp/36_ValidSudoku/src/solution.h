@@ -68,7 +68,7 @@ class Solution {
         return false;
       }
 
-      for (size_t column_index = column; column_index < column_index + 3; ++column_index) {
+      for (size_t column_index = column; column_index < column + 3; ++column_index) {
         if (column_index >= board[row_index].size()) {
           return false;
         }
